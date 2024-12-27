@@ -141,11 +141,12 @@
                                                 action="{{ route('internal-memo.upload', ['ticket_number' => $ticket->ticket_number]) }}"
                                                 method="POST" enctype="multipart/form-data">
                                                 @csrf
-                                                <div class="mb-3">
+                                                <div class="form-group mb-3">
                                                     <label for="file" class="form-label">File
                                                         ({{ $ticket->confidential == 'No' ? 'Required' : 'Optional' }})</label>
                                                     <input type="file" name="file" class="form-control"
                                                         {{ $ticket->confidential == 'No' ? 'required' : '' }}>
+                                                    <small id="textHelp" class="form-text text-muted">PDF only</small>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </form>
