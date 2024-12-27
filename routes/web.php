@@ -18,52 +18,55 @@ use App\Http\Controllers\SuratPerjanjianController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('guest');
+// Halaman Login (Guest & SSO Middleware)
+Route::get('/', [LoginController::class, 'showLoginForm'])
+    ->middleware(['redirect_if_authenticated'])
+    ->name('login');
 
-Route::get('/dashboard2', function () {
-    return view('dashboard2');
-})->middleware('guest');
-
-Route::get('/', [LoginController::class, 'showLoginForm'])->middleware('redirect_if_authenticated')->name('login');
 Route::post('/dashboard', [LoginController::class, 'login'])->name('login.post');
-// Route::get('forgetPassword', [LoginController::class, 'forgetPassword'])->name('forgetPassword');
-// Route::post('changeForgetPassword', [LoginController::class, 'changeForgetPassword'])->name('changeForgetPassword');
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-    // Route::get('profile', [LoginController::class, 'profile'])->name('profile');
-    // Route::get('changePassword', [LoginController::class, 'changePassword'])->name('changePassword');
 
-    Route::get('/incoming-mail/index', [IncomingMailController::class, 'index'])->name('incoming-mail.index');
-    Route::get('/incoming-mail/history', [IncomingMailController::class, 'history'])->name('incoming-mail.history');
-    Route::get('/incoming-mail/form', [IncomingMailController::class, 'form'])->name('incoming-mail.form');
-    Route::post('/incoming-mail/index', [IncomingMailController::class, 'store'])->name('incoming-mail.store');
-    Route::get('/incoming-mail/detail/{ticket_number}', [IncomingMailController::class, 'show'])->name('incoming-mail.detail');
-    Route::post('/incoming-mail/{ticket_number}/upload', [IncomingMailController::class, 'upload'])->name('incoming-mail.upload');
+    // Incoming Mail Routes
+    Route::prefix('incoming-mail')->name('incoming-mail.')->group(function () {
+        Route::get('/index', [IncomingMailController::class, 'index'])->name('index');
+        Route::get('/history', [IncomingMailController::class, 'history'])->name('history');
+        Route::get('/form', [IncomingMailController::class, 'form'])->name('form');
+        Route::post('/index', [IncomingMailController::class, 'store'])->name('store');
+        Route::get('/detail/{ticket_number}', [IncomingMailController::class, 'show'])->name('detail');
+        Route::post('/{ticket_number}/upload', [IncomingMailController::class, 'upload'])->name('upload');
+    });
 
-    Route::get('/outgoing-mail/index', [OutgoingMailController::class, 'index'])->name('outgoing-mail.index');
-    Route::get('/outgoing-mail/history', [OutgoingMailController::class, 'history'])->name('outgoing-mail.history');
-    Route::get('/outgoing-mail/form', [OutgoingMailController::class, 'form'])->name('outgoing-mail.form');
-    Route::post('/outgoing-mail/index', [OutgoingMailController::class, 'store'])->name('outgoing-mail.store');
-    Route::get('/outgoing-mail/detail/{ticket_number}', [OutgoingMailController::class, 'show'])->name('outgoing-mail.detail');
-    Route::post('/outgoing-mail/{ticket_number}/upload', [OutgoingMailController::class, 'upload'])->name('outgoing-mail.upload');
+    // Outgoing Mail Routes
+    Route::prefix('outgoing-mail')->name('outgoing-mail.')->group(function () {
+        Route::get('/index', [OutgoingMailController::class, 'index'])->name('index');
+        Route::get('/history', [OutgoingMailController::class, 'history'])->name('history');
+        Route::get('/form', [OutgoingMailController::class, 'form'])->name('form');
+        Route::post('/index', [OutgoingMailController::class, 'store'])->name('store');
+        Route::get('/detail/{ticket_number}', [OutgoingMailController::class, 'show'])->name('detail');
+        Route::post('/{ticket_number}/upload', [OutgoingMailController::class, 'upload'])->name('upload');
+    });
 
-    Route::get('/internal-memo/index', [InternalMemoController::class, 'index'])->name('internal-memo.index');
-    Route::get('/internal-memo/history', [InternalMemoController::class, 'history'])->name('internal-memo.history');
-    Route::get('/internal-memo/form', [InternalMemoController::class, 'form'])->name('internal-memo.form');
-    Route::post('/internal-memo/index', [InternalMemoController::class, 'store'])->name('internal-memo.store');
-    Route::get('/internal-memo/detail/{ticket_number}', [InternalMemoController::class, 'show'])->name('internal-memo.detail');
-    Route::post('/internal-memo/{ticket_number}/upload', [InternalMemoController::class, 'upload'])->name('internal-memo.upload');
+    // Internal Memo Routes
+    Route::prefix('internal-memo')->name('internal-memo.')->group(function () {
+        Route::get('/index', [InternalMemoController::class, 'index'])->name('index');
+        Route::get('/history', [InternalMemoController::class, 'history'])->name('history');
+        Route::get('/form', [InternalMemoController::class, 'form'])->name('form');
+        Route::post('/index', [InternalMemoController::class, 'store'])->name('store');
+        Route::get('/detail/{ticket_number}', [InternalMemoController::class, 'show'])->name('detail');
+        Route::post('/{ticket_number}/upload', [InternalMemoController::class, 'upload'])->name('upload');
+    });
 
-    Route::get('/surat-perjanjian/index', [SuratPerjanjianController::class, 'index'])->name('surat-perjanjian.index');
-    Route::get('/surat-perjanjian/history', [SuratPerjanjianController::class, 'history'])->name('surat-perjanjian.history');
-    Route::get('/surat-perjanjian/form', [SuratPerjanjianController::class, 'form'])->name('surat-perjanjian.form');
-    Route::post('/surat-perjanjian/index', [SuratPerjanjianController::class, 'store'])->name('surat-perjanjian.store');
-    Route::get('/surat-perjanjian/detail/{ticket_number}', [SuratPerjanjianController::class, 'show'])->name('surat-perjanjian.detail');
-    Route::post('/surat-perjanjian/{ticket_number}/upload', [SuratPerjanjianController::class, 'upload'])->name('surat-perjanjian.upload');
-
-    // Route::post('submitChangePassword', [LoginController::class, 'submitChangePassword'])->name('submitChangePassword');
+    // Surat Perjanjian Routes
+    Route::prefix('surat-perjanjian')->name('surat-perjanjian.')->group(function () {
+        Route::get('/index', [SuratPerjanjianController::class, 'index'])->name('index');
+        Route::get('/history', [SuratPerjanjianController::class, 'history'])->name('history');
+        Route::get('/form', [SuratPerjanjianController::class, 'form'])->name('form');
+        Route::post('/index', [SuratPerjanjianController::class, 'store'])->name('store');
+        Route::get('/detail/{ticket_number}', [SuratPerjanjianController::class, 'show'])->name('detail');
+        Route::post('/{ticket_number}/upload', [SuratPerjanjianController::class, 'upload'])->name('upload');
+    });
 });
