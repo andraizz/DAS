@@ -245,8 +245,8 @@ class SuratPerjanjianController extends Controller
         // Validasi file upload
         $validated = $request->validate([
             'file' => $ticket->confidential == 2
-                ? 'required|file|mimes:pdf,doc,docx|max:2048'
-                : 'nullable|file|mimes:pdf,doc,docx|max:2048',
+                ? 'required|file|mimes:pdf|max:2048'
+                : 'nullable|file|mimes:pdf|max:2048',
         ]);
 
         // Menyimpan file
