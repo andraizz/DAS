@@ -60,10 +60,16 @@
                                         @forelse ($mails as $mail)
                                             <tr>
                                                 <td>
-                                                    <a
-                                                        href="{{ route('surat-perjanjian.detail', ['ticket_number' => $mail->ticket_number]) }}">
-                                                        {{ $mail->ticket_number }}
-                                                    </a>
+                                                    @if ($mail->remaining_days > 0 && !$mail->is_closed)
+                                                        <!-- Tampilkan link jika belum expired dan belum closed -->
+                                                        <a
+                                                            href="{{ route('surat-perjanjian.detail', ['ticket_number' => $mail->ticket_number]) }}">
+                                                            {{ $mail->ticket_number }}
+                                                        </a>
+                                                    @else
+                                                        <!-- Tampilkan teks biasa jika expired atau closed -->
+                                                        <span class="text-muted">{{ $mail->ticket_number }}</span>
+                                                    @endif
                                                 </td>
                                                 <td>{{ $mail->judul }}</td>
                                                 <td>{{ $mail->tujuan }}</td>
@@ -88,8 +94,7 @@
                                                         @else
                                                             <span
                                                                 class="badge bg-secondary fs-2 rounded-3 gap-1 d-inline-flex align-items-center"><i
-                                                                    class="ti ti-clock-hour-4 fs-3"></i>{{ $mail->remaining_days }}
-                                                                hari</span>
+                                                                    class="ti ti-clock-hour-4 fs-3"></i>Expired</span>
                                                         @endif
                                                     @endif
                                                 </td>
