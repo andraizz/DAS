@@ -83,17 +83,17 @@
                                                     @else
                                                         @if ($mail->remaining_days > 0)
                                                             <span
-                                                                class="badge bg-warning fs-2 rounded-3 gap-1 d-inline-flex align-items-center"><i
+                                                                class="badge bg-green fs-2 rounded-3 gap-1 d-inline-flex align-items-center"><i
                                                                     class="ti ti-clock-hour-4 fs-3"></i>{{ $mail->remaining_days }}
                                                                 hari</span>
                                                         @elseif ($mail->remaining_days === 0)
                                                             <span
-                                                                class="badge bg-danger fs-2 rounded-3 gap-1 d-inline-flex align-items-center"><i
+                                                                class="badge bg-warning fs-2 rounded-3 gap-1 d-inline-flex align-items-center"><i
                                                                     class="ti ti-clock-hour-4 fs-3"></i>{{ $mail->remaining_days }}
                                                                 hari</span>
                                                         @else
                                                             <span
-                                                                class="badge bg-secondary fs-2 rounded-3 gap-1 d-inline-flex align-items-center"><i
+                                                                class="badge bg-danger fs-2 rounded-3 gap-1 d-inline-flex align-items-center"><i
                                                                     class="ti ti-clock-hour-4 fs-3"></i>Expired</span>
                                                         @endif
                                                     @endif
