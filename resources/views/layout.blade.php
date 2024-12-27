@@ -104,14 +104,6 @@
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="{{ route('incoming-mail.form') }}" class="sidebar-link">
-                                        <div class="round-16 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-circle"></i>
-                                        </div>
-                                        <span class="hide-menu">Form</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
                                     <a href="{{ route('incoming-mail.history') }}" class="sidebar-link">
                                         <div class="round-16 d-flex align-items-center justify-content-center">
                                             <i class="ti ti-circle"></i>
@@ -135,14 +127,6 @@
                                             <i class="ti ti-circle"></i>
                                         </div>
                                         <span class="hide-menu">On Going Document</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{ route('outgoing-mail.form') }}" class="sidebar-link">
-                                        <div class="round-16 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-circle"></i>
-                                        </div>
-                                        <span class="hide-menu">Form</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
@@ -171,14 +155,14 @@
                                         <span class="hide-menu">On Going Document</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
+                                {{-- <li class="sidebar-item">
                                     <a href="{{ route('internal-memo.form') }}" class="sidebar-link">
                                         <div class="round-16 d-flex align-items-center justify-content-center">
                                             <i class="ti ti-circle"></i>
                                         </div>
                                         <span class="hide-menu">Form</span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li class="sidebar-item">
                                     <a href="{{ route('internal-memo.history') }}" class="sidebar-link">
                                         <div class="round-16 d-flex align-items-center justify-content-center">
@@ -203,14 +187,6 @@
                                             <i class="ti ti-circle"></i>
                                         </div>
                                         <span class="hide-menu">On Going Document</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{ route('surat-perjanjian.form') }}" class="sidebar-link">
-                                        <div class="round-16 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-circle"></i>
-                                        </div>
-                                        <span class="hide-menu">Form</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
