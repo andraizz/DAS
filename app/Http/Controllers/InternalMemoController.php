@@ -38,10 +38,10 @@ class InternalMemoController extends Controller
             'Procurement & Logistic' => 'PROC',
             'HR & GA' => 'HRD',
             'Legal' => 'LEG',
-            'C' => 'CORSEC',
+            'Corporate Strategic Planning' => 'CORSEC',
             'Internal Audit' => 'IA',
             'Corporate' => 'CORP',
-            'SP' => 'SP',
+            'Special Project' => 'SP',
         ];
 
         // Ambil divisi user yang login
@@ -81,10 +81,10 @@ class InternalMemoController extends Controller
             'Procurement & Logistic' => 'PROC',
             'HR & GA' => 'HRD',
             'Legal' => 'LEG',
-            'C' => 'CORSEC',
+            'Corporate Strategic Planning' => 'CORSEC',
             'Internal Audit' => 'IA',
             'Corporate' => 'CORP',
-            'SP' => 'SP',
+            'Special Project' => 'SP',
         ];
 
         // Ambil divisi user yang login
