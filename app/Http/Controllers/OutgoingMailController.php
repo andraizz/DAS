@@ -119,7 +119,16 @@ class OutgoingMailController extends Controller
 
     public function form()
     {
-        return view('outgoing-mail.form');
+        // return view('outgoing-mail.form');
+        try {
+            // Ambil data dari tabel sk_tujuan dan sk_perihal
+            $tujuanList = DB::table('sk_tujuan')->select('kode_tujuan', 'tujuan')->get();
+            $perihalList = DB::table('sk_perihal')->select('kode_perihal', 'perihal')->get();
+
+            return view('outgoing-mail.form', compact('tujuanList', 'perihalList'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memuat data: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -129,7 +138,7 @@ class OutgoingMailController extends Controller
      */
     public function create()
     {
-        //
+        // 
     }
 
     /**
@@ -177,11 +186,19 @@ class OutgoingMailController extends Controller
             $ticket = "{$dateNow}-{$jenisSurat}-{$increment}"; // Format nomor tiket
 
             // Generate nomor dokumen
+            $tujuan = $request->tujuan === 'others' ? $request->tujuan_other : $request->tujuan;
+            $kodeTujuan = $request->tujuan === 'others'
+                ? 'OTH'
+                : DB::table('sk_tujuan')->where('tujuan', $request->tujuan)->value('kode_tujuan');
+
+            $perihal = $request->perihal === 'others' ? $request->perihal_other : $request->perihal;
+            $kodePerihal = $request->perihal === 'others'
+                ? 'OTH'
+                : DB::table('sk_perihal')->where('perihal', $request->perihal)->value('kode_perihal');
+
             $kodePerusahaan = $request->perusahaan;
-            $tujuan = $request->tujuan;
             $penandatangan = $request->penandatangan;
             $divisi = $request->divisi;
-            $perihal = $request->perihal;
             $bulanRomawi = $this->convertToRoman(now()->month); // Konversi bulan ke angka romawi
             $tahun = now()->year;
 
@@ -201,9 +218,11 @@ class OutgoingMailController extends Controller
                 $incrementDoc = str_pad(1, 3, '0', STR_PAD_LEFT);
             }
 
-            $documentNumber = "{$incrementDoc}/{$kodePerusahaan}-{$tujuan}/{$penandatangan}/{$divisi}/{$perihal}/{$bulanRomawi}/{$tahun}"; // Format nomor dokumen
+            $documentNumber = "{$incrementDoc}/{$kodePerusahaan}-{$kodeTujuan}/{$penandatangan}/{$divisi}/{$kodePerihal}/{$bulanRomawi}/{$tahun}"; // Format nomor dokumen
 
             // Simpan data ke database
+            $validatedData['tujuan'] = $tujuan;
+            $validatedData['perihal'] = $perihal;
             $validatedData['ticket_number'] = $ticket;
             $validatedData['document_number'] = $documentNumber;
             $validatedData['status'] = 'Submitted';
