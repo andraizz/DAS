@@ -64,21 +64,19 @@
                                     <div class="mb-3 row">
                                         <label for="inlineFormCustomSelect" class="col-md-2 col-form-label">Tujuan</label>
                                         <div class="col-md-10">
-                                            <select class="form-select col-12" id="inlineFormCustomSelect" name="tujuan"
-                                                required>
+                                            <select class="form-select col-12" id="tujuan" name="tujuan"
+                                                required onchange="toggleOtherInput('tujuan')">
                                                 <option value="" selected>Choose...</option>
-                                                <option value="MS">MS </option>
-                                                <option value="LEG">LEG</option>
-                                                <option value="CORSEC">CORSEC</option>
-                                                <option value="ENG">ENG</option>
-                                                <option value="SALES">SALES</option>
-                                                <option value="PROC">PROC</option>
-                                                <option value="FIN">FIN</option>
-                                                <option value="CORP">CORP</option>
-                                                <option value="HRD">HRD</option>
-                                                <option value="SP">SP</option>
-                                                <option value="IA">IA</option>
+                                                @foreach ($tujuanList as $tujuan)
+                                                    <option value="{{ $tujuan->tujuan }}" data-kode="{{ $tujuan->kode_tujuan }}">
+                                                        {{ $tujuan->tujuan }}
+                                                    </option>
+                                                @endforeach
+                                                <option value="others">Others</option>
                                             </select>
+                                            <div id="tujuan_other_div" style="display: none;">
+                                                <input type="text" class="form-control mt-2" id="tujuan_other" name="tujuan_other" placeholder="Input tujuan lainnya">
+                                            </div>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>
                                         </div>
@@ -103,14 +101,16 @@
                                                 <option value="SP">SP</option>
                                                 <option value="IA">IA</option>
                                             </select>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please provide a valid input.</div>
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
                                         <label for="inlineFormCustomSelect" class="col-md-2 col-form-label">Perihal</label>
                                         <div class="col-md-10">
-                                            <select class="form-select col-12" id="inlineFormCustomSelect" name="perihal"
-                                                required>
+                                            <select class="form-select col-12" id="perihal" name="perihal"
+                                                required onchange="toggleOtherInput('perihal')">
                                                 <option value="" selected>Choose...</option>
                                                 <option value="AMD">AMD </option>
                                                 <option value="MOU">MOU</option>
@@ -118,8 +118,13 @@
                                                 <option value="LOI">LOI</option>
                                                 <option value="LOA">LOA</option>
                                                 <option value="SPK">SPK</option>
-                                                <option value="OTH">OTH</option>
+                                                <option value="others">Others</option>
                                             </select>
+                                            <div id="perihal_other_div" style="display: none;">
+                                                <input type="text" class="form-control mt-2" id="perihal_other" name="perihal_other" placeholder="Input perihal lainnya">
+                                            </div>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please provide a valid input.</div>
                                         </div>
                                     </div>
 
@@ -171,3 +176,15 @@
         </section>
     </div>
 @endsection
+
+<script>
+    function toggleOtherInput(type) {
+        const select = document.getElementById(type);
+        const otherDiv = document.getElementById(`${type}_other_div`);
+        if (select.value === "others") {
+            otherDiv.style.display = "block";
+        } else {
+            otherDiv.style.display = "none";
+        }
+    }
+</script>
