@@ -119,7 +119,15 @@ class SuratPerjanjianController extends Controller
 
     public function form()
     {
-        return view('surat-perjanjian.form');
+        // return view('surat-perjanjian.form');
+        try {
+            // Ambil data dari tabel sk_tujuan dan sk_perihal
+            $tujuanList = DB::table('sp_tujuan')->select('kode_tujuan', 'tujuan')->get();
+
+            return view('surat-perjanjian.form', compact('tujuanList'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memuat data: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -175,16 +183,24 @@ class SuratPerjanjianController extends Controller
             $ticket = "{$dateNow}-{$jenisSurat}-{$increment}"; // Format nomor tiket
 
             // Generate nomor dokumen
+            $tujuan = $request->tujuan === 'others' ? $request->tujuan_other : $request->tujuan;
+            $kodeTujuan = $request->tujuan === 'others'
+                ? 'OTH'
+                : DB::table('sp_tujuan')->where('tujuan', $request->tujuan)->value('kode_tujuan');
+
+            $perihal = $request->perihal === 'others' ? $request->perihal_other : $request->perihal;
+            $kodePerihal = $request->perihal === 'others' ? 'OTH' : $request->perihal;
+
             $kodePerusahaan = $request->perusahaan;
-            $tujuan = $request->tujuan;
             $divisi = $request->divisi;
-            $perihal = $request->perihal;
             $bulanRomawi = $this->convertToRoman(now()->month); // Konversi bulan ke angka romawi
             $tahun = now()->year;
 
-            $documentNumber = "{$increment}/{$kodePerusahaan}-{$tujuan}/{$divisi}/{$perihal}/{$bulanRomawi}/{$tahun}"; // Format nomor dokumen
+            $documentNumber = "{$increment}/{$kodePerusahaan}-{$kodeTujuan}/{$divisi}/{$kodePerihal}/{$bulanRomawi}/{$tahun}"; // Format nomor dokumen
 
             // Simpan data ke database
+            $validatedData['tujuan'] = $tujuan;
+            $validatedData['perihal'] = $perihal;
             $validatedData['ticket_number'] = $ticket;
             $validatedData['document_number'] = $documentNumber;
             $validatedData['status'] = 'Submitted';
