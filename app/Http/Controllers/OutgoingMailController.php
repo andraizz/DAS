@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Helpers\AuthHelpers;
 use App\Models\OutgoingMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,18 +20,6 @@ class OutgoingMailController extends Controller
      */
     public function index()
     {
-        // $mails = OutgoingMail::select(
-        //     'judul',
-        //     'tujuan',
-        //     'perihal',
-        //     'ticket_number',
-        //     'document_number',
-        //     'created_at',
-        //     'status',
-        //     'end_date'
-        // )->where('status', 'Submitted')->get();
-
-        // return view('outgoing-mail.index', compact('mails'));
 
         $divisiMapping = [
             'Managed Service' => 'MS',
@@ -38,24 +28,25 @@ class OutgoingMailController extends Controller
             'Finance & Accounting' => 'FIN',
             'Procurement & Logistic' => 'PROC',
             'HR & GA' => 'HRD',
-            'Legal' => 'LEG',
             'Corporate Strategic Planning' => 'CORSEC',
             'Internal Audit' => 'IA',
             'Corporate' => 'CORP',
             'Special Project' => 'SP',
         ];
 
-        // Ambil divisi user yang login
-        $userDivision = Auth::user()->divisi;
-
-        // Cek apakah divisi user ada di mapping
-        $divisi = $divisiMapping[$userDivision] ?? null;
-
-        if (!$divisi) {
-            // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
-            $mails = collect(); // Empty collection
-        } else {
-            // Filter tiket berdasarkan divisi
+        if (AuthHelpers::isMasterAdmin()) {
+            // Jika user adalah master admin, tampilkan semua tiket
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Submitted')->get();
+        } elseif (Auth::user()->nik === 'KT-23111401') {
             $mails = OutgoingMail::select(
                 'ticket_number',
                 'judul',
@@ -66,8 +57,82 @@ class OutgoingMailController extends Controller
                 'status',
                 'end_date',
             )->where('status', 'Submitted')
-                ->where('divisi', $divisi)
+                ->where('divisi', 'SITAC') // Asrizal
                 ->get();
+        } elseif (Auth::user()->nik === 'KT-19100823') {
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Submitted')
+                ->where('divisi', 'LEG') // Fadhel
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-22071206') {
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Submitted')
+                ->where('divisi', 'ACC') // Dian Safitri
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-23051308' || Auth::user()->nik == 'KT-22081208') {
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Submitted')
+                ->where('divisi', 'CME') // Nico & Krestear
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-25010503') {
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Submitted')
+                ->where('divisi', 'BETARI') // Pratiwi Dwi Sana
+                ->get();
+        } else {
+            // Ambil divisi user yang login
+            $userDivision = Auth::user()->divisi;
+            $divisi = $divisiMapping[$userDivision] ?? null;
+
+            if (!$divisi) {
+                // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
+                $mails = collect();
+            } else {
+                $mails = OutgoingMail::select(
+                    'ticket_number',
+                    'judul',
+                    'tujuan',
+                    'perihal',
+                    'document_number',
+                    'created_at',
+                    'status',
+                    'end_date',
+                )->where('status', 'Submitted')
+                    ->where('divisi', $divisi)
+                    ->get();
+            }
         }
 
         return view('outgoing-mail.index', compact('mails'));
@@ -82,24 +147,25 @@ class OutgoingMailController extends Controller
             'Finance & Accounting' => 'FIN',
             'Procurement & Logistic' => 'PROC',
             'HR & GA' => 'HRD',
-            'Legal' => 'LEG',
             'Corporate Strategic Planning' => 'CORSEC',
             'Internal Audit' => 'IA',
             'Corporate' => 'CORP',
             'Special Project' => 'SP',
         ];
 
-        // Ambil divisi user yang login
-        $userDivision = Auth::user()->divisi;
-
-        // Cek apakah divisi user ada di mapping
-        $divisi = $divisiMapping[$userDivision] ?? null;
-
-        if (!$divisi) {
-            // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
-            $mails = collect(); // Empty collection
-        } else {
-            // Filter tiket berdasarkan divisi
+        if (AuthHelpers::isMasterAdmin()) {
+            // Jika user adalah master admin, tampilkan semua tiket
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Closed')->get();
+        } elseif (Auth::user()->nik === 'KT-23111405') {
             $mails = OutgoingMail::select(
                 'ticket_number',
                 'judul',
@@ -110,8 +176,83 @@ class OutgoingMailController extends Controller
                 'status',
                 'end_date',
             )->where('status', 'Closed')
-                ->where('divisi', $divisi)
+                ->where('divisi', 'SITAC') // Asrizal
                 ->get();
+        } elseif (Auth::user()->nik === 'KT-19100823') {
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Closed')
+                ->where('divisi', 'LEG') // Fadhel
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-22071206') {
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Closed')
+                ->where('divisi', 'ACC') // Dian Safitri
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-23051308' || Auth::user()->nik == 'KT-22081208') {
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Closed')
+                ->where('divisi', 'CME') // Nico & Krestear
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-25010503') {
+            $mails = OutgoingMail::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date',
+            )->where('status', 'Closed')
+                ->where('divisi', 'BETARI') // Pratiwi Dwi Sana
+                ->get();
+        } else {
+            // Ambil divisi user yang login
+            $userDivision = Auth::user()->divisi;
+            $divisi = $divisiMapping[$userDivision] ?? null;
+
+            if (!$divisi) {
+                // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
+                $mails = collect();
+            } else {
+                // Filter tiket berdasarkan divisi
+                $mails = OutgoingMail::select(
+                    'ticket_number',
+                    'judul',
+                    'tujuan',
+                    'perihal',
+                    'document_number',
+                    'created_at',
+                    'status',
+                    'end_date',
+                )->where('status', 'Closed')
+                    ->where('divisi', $divisi)
+                    ->get();
+            }
         }
 
         return view('outgoing-mail.history', compact('mails'));
@@ -157,6 +298,7 @@ class OutgoingMailController extends Controller
             'penandatangan' => 'required|string|max:255',
             'divisi' => 'required|string|max:255',
             'perihal' => 'required|string|max:255',
+            'invoice' => 'nullable|string|max:255',
             'tanggal_dikirim' => 'required|date',
             'tanggal_surat' => 'required|date',
             'confidential' => 'required|string|max:3',
@@ -266,23 +408,38 @@ class OutgoingMailController extends Controller
     {
         $ticket = OutgoingMail::where('ticket_number', $ticket_number)->firstOrFail();
 
-        return view('outgoing-mail.detail', [
-            'ticket' => $ticket
-        ]);
+        // Tanggal awal
+        $createdAt = Carbon::parse($ticket->created_at);
+
+        // Tentukan tanggal akhir (end_date atau maksimal 5 hari dari created_at)
+        $endDate = $ticket->end_date ? Carbon::parse($ticket->end_date) : $createdAt->addDays(5);
+
+        // Hitung keterlambatan hanya jika melebihi tanggal akhir
+        $daysLate = now()->greaterThan($endDate) ? $endDate->diffInDays(now(), false) : 0;
+
+        return view('outgoing-mail.detail', compact('ticket', 'daysLate'));
     }
 
     public function upload(Request $request, $ticket_number)
     {
-
         $ticket = OutgoingMail::where('ticket_number', $ticket_number)->first();
 
         if (!$ticket) {
             return redirect()->back()->with('error', 'Ticket tidak ditemukan.');
         }
 
+        $ticket->tanggal_dikirim = $request->tanggal_dikirim;
+        $ticket->tanggal_surat = $request->tanggal_surat;
+
+        // Hitung selisih hari jika tiket kedaluwarsa
+        $createdAt = Carbon::parse($ticket->created_at);
+        $daysLate = $createdAt->diffInDays(now(), false);
+
         // Validasi file upload
         $validated = $request->validate([
-            'file' => $ticket->confidential == 2
+            'tanggal_dikirim' => 'required|date',
+            'tanggal_surat' => 'required|date',
+            'file' => $ticket->confidential == "No"
                 ? 'required|file|mimes:pdf|max:2048'
                 : 'nullable|file|mimes:pdf|max:2048',
         ]);
@@ -291,6 +448,11 @@ class OutgoingMailController extends Controller
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('outgoing-mails', 'public');
             $ticket->file_path = $filePath;
+        }
+
+        // Update status final jika checkbox dicentang
+        if ($request->has('is_final')) {
+            $ticket->is_final = true;
         }
 
         $ticket->status = 'Closed';

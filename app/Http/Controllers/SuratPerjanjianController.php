@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Helpers\AuthHelpers;
 use Illuminate\Http\Request;
 use App\Models\SuratPerjanjian;
 use Illuminate\Support\Facades\DB;
@@ -18,19 +20,6 @@ class SuratPerjanjianController extends Controller
      */
     public function index()
     {
-        // $mails = SuratPerjanjian::select(
-        //     'judul',
-        //     'tujuan',
-        //     'perihal',
-        //     'ticket_number',
-        //     'document_number',
-        //     'created_at',
-        //     'status',
-        //     'end_date'
-        // )->where('status', 'Submitted')->get();
-
-        // return view('surat-perjanjian.index', compact('mails'));
-
         $divisiMapping = [
             'Managed Service' => 'MS',
             'Engineering' => 'ENG',
@@ -38,24 +27,25 @@ class SuratPerjanjianController extends Controller
             'Finance & Accounting' => 'FIN',
             'Procurement & Logistic' => 'PROC',
             'HR & GA' => 'HRD',
-            'Legal' => 'LEG',
             'Corporate Strategic Planning' => 'CORSEC',
             'Internal Audit' => 'IA',
             'Corporate' => 'CORP',
             'Special Project' => 'SP',
         ];
 
-        // Ambil divisi user yang login
-        $userDivision = Auth::user()->divisi;
-
-        // Cek apakah divisi user ada di mapping
-        $divisi = $divisiMapping[$userDivision] ?? null;
-
-        if (!$divisi) {
-            // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
-            $mails = collect(); // Empty collection
-        } else {
-            // Filter tiket berdasarkan divisi
+        if (AuthHelpers::isMasterAdmin()) {
+            // Jika user adalah master admin, tampilkan semua tiket
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Submitted')->get();
+        } elseif (Auth::user()->nik === 'KT-23111405') {
             $mails = SuratPerjanjian::select(
                 'ticket_number',
                 'judul',
@@ -66,8 +56,81 @@ class SuratPerjanjianController extends Controller
                 'status',
                 'end_date'
             )->where('status', 'Submitted')
-                ->where('divisi', $divisi)
+                ->where('divisi', 'SITAC') // Asrizal
                 ->get();
+        } elseif (Auth::user()->nik === 'KT-19100823') {
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Submitted')
+                ->where('divisi', 'LEG') // Fadhel
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-22071206') {
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Submitted')
+                ->where('divisi', 'ACC') // Dian Safitri
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-23051308' || Auth::user()->nik == 'KT-22081208') {
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Submitted')
+                ->where('divisi', 'CME') // Nico & Krestear
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-25010503') {
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Submitted')
+                ->where('divisi', 'BETARI') // Pratiwi Dwi Sana
+                ->get();
+        } else {
+            $userDivision = Auth::user()->divisi;
+            $divisi = $divisiMapping[$userDivision] ?? null;
+
+            if (!$divisi) {
+                // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
+                $mails = collect();
+            } else {
+                $mails = SuratPerjanjian::select(
+                    'ticket_number',
+                    'judul',
+                    'tujuan',
+                    'perihal',
+                    'document_number',
+                    'created_at',
+                    'status',
+                    'end_date'
+                )->where('status', 'Submitted')
+                    ->where('divisi', $divisi)
+                    ->get();
+            }
         }
 
         return view('surat-perjanjian.index', compact('mails'));
@@ -82,24 +145,25 @@ class SuratPerjanjianController extends Controller
             'Finance & Accounting' => 'FIN',
             'Procurement & Logistic' => 'PROC',
             'HR & GA' => 'HRD',
-            'Legal' => 'LEG',
             'Corporate Strategic Planning' => 'CORSEC',
             'Internal Audit' => 'IA',
             'Corporate' => 'CORP',
             'Special Project' => 'SP',
         ];
 
-        // Ambil divisi user yang login
-        $userDivision = Auth::user()->divisi;
-
-        // Cek apakah divisi user ada di mapping
-        $divisi = $divisiMapping[$userDivision] ?? null;
-
-        if (!$divisi) {
-            // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
-            $mails = collect(); // Empty collection
-        } else {
-            // Filter tiket berdasarkan divisi
+        if (AuthHelpers::isMasterAdmin()) {
+            // Jika user adalah master admin, tampilkan semua tiket
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Closed')->get();
+        } elseif (Auth::user()->nik === 'KT-23111405') {
             $mails = SuratPerjanjian::select(
                 'ticket_number',
                 'judul',
@@ -110,8 +174,81 @@ class SuratPerjanjianController extends Controller
                 'status',
                 'end_date'
             )->where('status', 'Closed')
-                ->where('divisi', $divisi)
+                ->where('divisi', 'SITAC') // Asrizal
                 ->get();
+        } elseif (Auth::user()->nik === 'KT-19100823') {
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Closed')
+                ->where('divisi', 'LEG') // Fadhel
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-22071206') {
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Closed')
+                ->where('divisi', 'ACC') // Dian Safitri
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-23051308' || Auth::user()->nik == 'KT-22081208') {
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Closed')
+                ->where('divisi', 'CME') // Nico & Krestear
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-25010503') {
+            $mails = SuratPerjanjian::select(
+                'ticket_number',
+                'judul',
+                'tujuan',
+                'perihal',
+                'document_number',
+                'created_at',
+                'status',
+                'end_date'
+            )->where('status', 'Closed')
+                ->where('divisi', 'BETARI') // Pratiwi Dwi Sana
+                ->get();
+        } else {
+            $userDivision = Auth::user()->divisi;
+            $divisi = $divisiMapping[$userDivision] ?? null;
+
+            if (!$divisi) {
+                // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
+                $mails = collect();
+            } else {
+                $mails = SuratPerjanjian::select(
+                    'ticket_number',
+                    'judul',
+                    'tujuan',
+                    'perihal',
+                    'document_number',
+                    'created_at',
+                    'status',
+                    'end_date'
+                )->where('status', 'Closed')
+                    ->where('divisi', $divisi)
+                    ->get();
+            }
         }
 
         return view('surat-perjanjian.history', compact('mails'));
@@ -119,12 +256,11 @@ class SuratPerjanjianController extends Controller
 
     public function form()
     {
-        // return view('surat-perjanjian.form');
         try {
-            // Ambil data dari tabel sk_tujuan dan sk_perihal
             $tujuanList = DB::table('sp_tujuan')->select('kode_tujuan', 'tujuan')->get();
+            $perihalList = DB::table('sp_perihal')->select('kode_perihal', 'perihal')->get();
 
-            return view('surat-perjanjian.form', compact('tujuanList'));
+            return view('surat-perjanjian.form', compact('tujuanList', 'perihalList'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal memuat data: ' . $e->getMessage());
         }
@@ -189,7 +325,9 @@ class SuratPerjanjianController extends Controller
                 : DB::table('sp_tujuan')->where('tujuan', $request->tujuan)->value('kode_tujuan');
 
             $perihal = $request->perihal === 'others' ? $request->perihal_other : $request->perihal;
-            $kodePerihal = $request->perihal === 'others' ? 'OTH' : $request->perihal;
+            $kodePerihal = $request->perihal === 'others'
+                ? 'OTH'
+                : DB::table('sp_perihal')->where('perihal', $request->perihal)->value('kode_perihal');
 
             $kodePerusahaan = $request->perusahaan;
             $divisi = $request->divisi;
@@ -204,7 +342,7 @@ class SuratPerjanjianController extends Controller
             $validatedData['ticket_number'] = $ticket;
             $validatedData['document_number'] = $documentNumber;
             $validatedData['status'] = 'Submitted';
-            $validatedData['end_date'] = now()->addDays(5);
+            $validatedData['end_date'] = now()->addDays(30);
 
             SuratPerjanjian::create($validatedData);
 
@@ -244,9 +382,16 @@ class SuratPerjanjianController extends Controller
     {
         $ticket = SuratPerjanjian::where('ticket_number', $ticket_number)->firstOrFail();
 
-        return view('surat-perjanjian.detail', [
-            'ticket' => $ticket
-        ]);
+        // Tanggal awal
+        $createdAt = Carbon::parse($ticket->created_at);
+
+        // Tentukan tanggal akhir (end_date atau maksimal 30 hari dari created_at)
+        $endDate = $ticket->end_date ? Carbon::parse($ticket->end_date) : $createdAt->addDays(30);
+
+        // Hitung keterlambatan hanya jika melebihi tanggal akhir
+        $daysLate = now()->greaterThan($endDate) ? $endDate->diffInDays(now(), false) : 0;
+
+        return view('surat-perjanjian.detail', compact('ticket', 'daysLate'));
     }
 
     public function upload(Request $request, $ticket_number)
@@ -260,7 +405,7 @@ class SuratPerjanjianController extends Controller
 
         // Validasi file upload
         $validated = $request->validate([
-            'file' => $ticket->confidential == 2
+            'file' => $ticket->confidential == "No"
                 ? 'required|file|mimes:pdf|max:2048'
                 : 'nullable|file|mimes:pdf|max:2048',
         ]);

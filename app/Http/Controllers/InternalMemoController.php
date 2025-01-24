@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Helpers\AuthHelpers;
 use App\Models\InternalMemo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,18 +20,6 @@ class InternalMemoController extends Controller
      */
     public function index()
     {
-        // $mails = InternalMemo::select(
-        //     'divisi',
-        //     'perihal',
-        //     'ticket_number',
-        //     'document_number',
-        //     'created_at',
-        //     'status',
-        //     'end_date'
-        // )->where('status', 'Submitted')->get();
-
-        // return view('internal-memo.index', compact('mails'));
-
         $divisiMapping = [
             'Managed Service' => 'MS',
             'Engineering' => 'ENG',
@@ -37,24 +27,24 @@ class InternalMemoController extends Controller
             'Finance & Accounting' => 'FIN',
             'Procurement & Logistic' => 'PROC',
             'HR & GA' => 'HRD',
-            'Legal' => 'LEG',
             'Corporate Strategic Planning' => 'CORSEC',
             'Internal Audit' => 'IA',
             'Corporate' => 'CORP',
             'Special Project' => 'SP',
         ];
 
-        // Ambil divisi user yang login
-        $userDivision = Auth::user()->divisi;
-
-        // Cek apakah divisi user ada di mapping
-        $divisi = $divisiMapping[$userDivision] ?? null;
-
-        if (!$divisi) {
-            // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
-            $mails = collect(); // Empty collection
-        } else {
-            // Filter tiket berdasarkan divisi
+        if (AuthHelpers::isMasterAdmin()) {
+            // Jika user adalah master admin, tampilkan semua tiket
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Submitted')->get();
+        } elseif (Auth::user()->nik === 'KT-23111401') {
             $mails = InternalMemo::select(
                 'ticket_number',
                 'divisi',
@@ -64,8 +54,76 @@ class InternalMemoController extends Controller
                 'end_date',
                 'status',
             )->where('status', 'Submitted')
-                ->where('divisi', $divisi)
+                ->where('divisi', 'SITAC') // Asrizal
                 ->get();
+        } elseif (Auth::user()->nik === 'KT-19100823') {
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Submitted')
+                ->where('divisi', 'LEG') // Fadhel
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-22071206') {
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Submitted')
+                ->where('divisi', 'ACC') // Dian Safitri
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-23051308' || Auth::user()->nik == 'KT-22081208') {
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Submitted')
+                ->where('divisi', 'CME') // Nico & Krestear
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-25010503') {
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Submitted')
+                ->where('divisi', 'BETARI') // Pratiwi Dwi Sana
+                ->get();
+        } else {
+            $userDivision = Auth::user()->divisi;
+            $divisi = $divisiMapping[$userDivision] ?? null;
+
+            if (!$divisi) {
+                // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
+                $mails = collect();
+            } else {
+                $mails = InternalMemo::select(
+                    'ticket_number',
+                    'divisi',
+                    'perihal',
+                    'document_number',
+                    'created_at',
+                    'end_date',
+                    'status',
+                )->where('status', 'Submitted')
+                    ->where('divisi', $divisi)
+                    ->get();
+            }
         }
 
         return view('internal-memo.index', compact('mails'));
@@ -80,24 +138,24 @@ class InternalMemoController extends Controller
             'Finance & Accounting' => 'FIN',
             'Procurement & Logistic' => 'PROC',
             'HR & GA' => 'HRD',
-            'Legal' => 'LEG',
             'Corporate Strategic Planning' => 'CORSEC',
             'Internal Audit' => 'IA',
             'Corporate' => 'CORP',
             'Special Project' => 'SP',
         ];
 
-        // Ambil divisi user yang login
-        $userDivision = Auth::user()->divisi;
-
-        // Cek apakah divisi user ada di mapping
-        $divisi = $divisiMapping[$userDivision] ?? null;
-
-        if (!$divisi) {
-            // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
-            $mails = collect(); // Empty collection
-        } else {
-            // Filter tiket berdasarkan divisi
+        if (AuthHelpers::isMasterAdmin()) {
+            // Jika user adalah master admin, tampilkan semua tiket
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Closed')->get();
+        } elseif (Auth::user()->nik === 'KT-23111405') {
             $mails = InternalMemo::select(
                 'ticket_number',
                 'divisi',
@@ -107,8 +165,76 @@ class InternalMemoController extends Controller
                 'end_date',
                 'status',
             )->where('status', 'Closed')
-                ->where('divisi', $divisi)
+                ->where('divisi', 'SITAC') // Asrizal
                 ->get();
+        } elseif (Auth::user()->nik === 'KT-19100823') {
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Closed')
+                ->where('divisi', 'LEG') // Fadhel
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-22071206') {
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Closed')
+                ->where('divisi', 'ACC') // Dian Safitri
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-23051308' || Auth::user()->nik == 'KT-22081208') {
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Closed')
+                ->where('divisi', 'CME') // Nico & Krestear
+                ->get();
+        } elseif (Auth::user()->nik === 'KT-25010503') {
+            $mails = InternalMemo::select(
+                'ticket_number',
+                'divisi',
+                'perihal',
+                'document_number',
+                'created_at',
+                'end_date',
+                'status',
+            )->where('status', 'Closed')
+                ->where('divisi', 'BETARI') // Pratiwi Dwi Sana
+                ->get();
+        } else {
+            $userDivision = Auth::user()->divisi;
+            $divisi = $divisiMapping[$userDivision] ?? null;
+
+            if (!$divisi) {
+                // Jika divisi tidak ditemukan dalam mapping, tampilkan kosong
+                $mails = collect();
+            } else {
+                $mails = InternalMemo::select(
+                    'ticket_number',
+                    'divisi',
+                    'perihal',
+                    'document_number',
+                    'created_at',
+                    'end_date',
+                    'status',
+                )->where('status', 'Closed')
+                    ->where('divisi', $divisi)
+                    ->get();
+            }
         }
 
         return view('internal-memo.history', compact('mails'));
@@ -116,7 +242,14 @@ class InternalMemoController extends Controller
 
     public function form()
     {
-        return view('internal-memo.form');
+        try {
+            // Ambil data dari tabel sk_tujuan dan sk_perihal
+            $projekList = DB::table('im_projek')->get();
+
+            return view('internal-memo.form', compact('projekList'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memuat data: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -173,7 +306,6 @@ class InternalMemoController extends Controller
             // Generate nomor dokumen
             $kodePerusahaan = $request->perusahaan;
             $divisi = $request->divisi;
-            $perihal = $request->perihal;
             $project = $request->project;
             $bulanRomawi = $this->convertToRoman(now()->month); // Konversi bulan ke angka romawi
             $tahun = now()->year;
@@ -194,7 +326,7 @@ class InternalMemoController extends Controller
                 $incrementDoc = str_pad(1, 3, '0', STR_PAD_LEFT);
             }
 
-            $documentNumber = "{$incrementDoc}/{$kodePerusahaan}/{$divisi}-{$perihal}/{$project}/{$bulanRomawi}/{$tahun}"; // Format nomor dokumen
+            $documentNumber = "{$incrementDoc}/{$kodePerusahaan}/{$divisi}-IM/{$project}/{$bulanRomawi}/{$tahun}"; // Format nomor dokumen
 
             // Simpan data ke database
             $validatedData['ticket_number'] = $ticket;
@@ -240,9 +372,16 @@ class InternalMemoController extends Controller
     {
         $ticket = InternalMemo::where('ticket_number', $ticket_number)->firstOrFail();
 
-        return view('internal-memo.detail', [
-            'ticket' => $ticket
-        ]);
+        // Tanggal awal
+        $createdAt = Carbon::parse($ticket->created_at);
+
+        // Tentukan tanggal akhir (end_date atau maksimal 5 hari dari created_at)
+        $endDate = $ticket->end_date ? Carbon::parse($ticket->end_date) : $createdAt->addDays(5);
+
+        // Hitung keterlambatan hanya jika melebihi tanggal akhir
+        $daysLate = now()->greaterThan($endDate) ? $endDate->diffInDays(now(), false) : 0;
+
+        return view('internal-memo.detail', compact('ticket', 'daysLate'));
     }
 
     public function upload(Request $request, $ticket_number)
@@ -256,7 +395,7 @@ class InternalMemoController extends Controller
 
         // Validasi file upload
         $validated = $request->validate([
-            'file' => $ticket->confidential == 2
+            'file' => $ticket->confidential == "No"
                 ? 'required|file|mimes:pdf|max:2048'
                 : 'nullable|file|mimes:pdf|max:2048',
         ]);
