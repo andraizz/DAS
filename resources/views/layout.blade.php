@@ -21,19 +21,13 @@
     {{-- penting --}}
     <base href="{{ url('/') }}/">
 
-
     <!-- Favicon -->
-
     <link rel="shortcut icon" type="image/png" href="dist/images/logos/icon.png" />
 
-
     <!-- Owl Carousel -->
-
     <link rel="stylesheet" href="dist/libs/owl.carousel/dist/assets/owl.carousel.min.css">
 
-
     <!-- Core Css -->
-
     <link rel="stylesheet" href="{{ asset('dist/css/style.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" />
 
@@ -41,6 +35,17 @@
     <!-- Datatable -->
     <!-- --------------------------------------------------- -->
     <link rel="stylesheet" href="dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+
+    <!-- --------------------------------------------------- -->
+    <!-- Select2 -->
+    <!-- --------------------------------------------------- -->
+    <link rel="stylesheet" href="dist/libs/select2/dist/css/select2.min.css">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 Bootstrap Theme -->
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.0.0/dist/select2-bootstrap-5-theme.min.css"
+        rel="stylesheet" />
 </head>
 
 <body>
@@ -87,12 +92,58 @@
                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span class="hide-menu">Apps</span>
                         </li>
+                        {{-- Master Admin --}}
+                        <li class="sidebar-item">
+                            @if (Auth::user()->nik == 'KT-24081493' || Auth::user()->nik == 'KT-13040085')
+                                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                                    <span class="d-flex">
+                                        <i class="ti ti-chart-donut-3"></i>
+                                    </span>
+                                    <span class="hide-menu">Master Admin</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse first-level">
+                                    <li class="sidebar-item">
+                                        <a href="{{ route('admin.outgoing-mail.tujuan') }}" class="sidebar-link">
+                                            <div class="round-16 d-flex align-items-center justify-content-center">
+                                                <i class="ti ti-circle"></i>
+                                            </div>
+                                            <span class="hide-menu">Outgoing Document - Tujuan</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="{{ route('admin.outgoing-mail.perihal') }}" class="sidebar-link">
+                                            <div class="round-16 d-flex align-items-center justify-content-center">
+                                                <i class="ti ti-circle"></i>
+                                            </div>
+                                            <span class="hide-menu">Outgoing Document - Perihal</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="{{ route('admin.surat-perjanjian.tujuan') }}" class="sidebar-link">
+                                            <div class="round-16 d-flex align-items-center justify-content-center">
+                                                <i class="ti ti-circle"></i>
+                                            </div>
+                                            <span class="hide-menu">Surat Perjanjian - Tujuan</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="{{ route('admin.internal-memo.projek') }}" class="sidebar-link">
+                                            <div class="round-16 d-flex align-items-center justify-content-center">
+                                                <i class="ti ti-circle"></i>
+                                            </div>
+                                            <span class="hide-menu">Internal Memo - Projek</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endif
+                        </li>
+                        {{-- End Master Admin --}}
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                                 <span class="d-flex">
-                                    <i class="ti ti-chart-donut-3"></i>
+                                    <i class="ti ti-mail"></i>
                                 </span>
-                                <span class="hide-menu">Incoming Mail</span>
+                                <span class="hide-menu">Incoming Document</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
@@ -116,9 +167,9 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                                 <span class="d-flex">
-                                    <i class="ti ti-chart-donut-3"></i>
+                                    <i class="ti ti-mail"></i>
                                 </span>
-                                <span class="hide-menu">Outgoing Mail</span>
+                                <span class="hide-menu">Outgoing Document</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
@@ -142,7 +193,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                                 <span class="d-flex">
-                                    <i class="ti ti-chart-donut-3"></i>
+                                    <i class="ti ti-notes"></i>
                                 </span>
                                 <span class="hide-menu">Internal Memo</span>
                             </a>
@@ -176,7 +227,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                                 <span class="d-flex">
-                                    <i class="ti ti-chart-donut-3"></i>
+                                    <i class="ti ti-file-text"></i>
                                 </span>
                                 <span class="hide-menu">Surat Perjanjian</span>
                             </a>
@@ -652,36 +703,45 @@
     <!-- ---------------------------------------------- -->
     <script src="dist/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="dist/js/datatable/datatable-basic.init.js"></script>
+    <!-- ---------------------------------------------- -->
+    <!-- current page js files -->
+    <!-- ---------------------------------------------- -->
+    <script src="dist/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="dist/libs/select2/dist/js/select2.min.js"></script>
+    <script src="dist/js/forms/select2.init.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
     <script src="script.js"></script>
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function () {
-          "use strict";
-          window.addEventListener(
-            "load",
-            function () {
-              // Fetch all the forms we want to apply custom Bootstrap validation styles to
-              var forms = document.getElementsByClassName("needs-validation");
-              // Loop over them and prevent submission
-              var validation = Array.prototype.filter.call(
-                forms,
-                function (form) {
-                  form.addEventListener(
-                    "submit",
-                    function (event) {
-                      if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                      }
-                      form.classList.add("was-validated");
-                    },
-                    false
-                  );
-                }
-              );
-            },
-            false
-          );
+        (function() {
+            "use strict";
+            window.addEventListener(
+                "load",
+                function() {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName("needs-validation");
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(
+                        forms,
+                        function(form) {
+                            form.addEventListener(
+                                "submit",
+                                function(event) {
+                                    if (form.checkValidity() === false) {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                    }
+                                    form.classList.add("was-validated");
+                                },
+                                false
+                            );
+                        }
+                    );
+                },
+                false
+            );
         })();
     </script>
     <script>
@@ -694,6 +754,51 @@
             } else {
                 input.attr("type", "password");
             }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var clipboard = new ClipboardJS('.copy-btn');
+
+            clipboard.on('success', function(e) {
+                // Opsional: Menampilkan feedback jika berhasil menyalin
+                alert('Teks berhasil disalin: ' + e.text);
+            });
+
+            clipboard.on('error', function(e) {
+                // Opsional: Menampilkan feedback jika gagal menyalin
+                alert('Gagal menyalin!');
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#tujuanSk').select2({
+                theme: 'bootstrap-5', // Menggunakan tema Bootstrap
+                width: '100%', // Menjamin lebar penuh
+                placeholder: 'Choose...', // Placeholder default
+            });
+        });
+        $(document).ready(function() {
+            $('#tujuanSp').select2({
+                theme: 'bootstrap-5', // Menggunakan tema Bootstrap
+                width: '100%', // Menjamin lebar penuh
+                placeholder: 'Choose...', // Placeholder default
+            });
+        });
+        $(document).ready(function() {
+            $('#perihalSk').select2({
+                theme: 'bootstrap-5', // Menggunakan tema Bootstrap
+                width: '100%', // Menjamin lebar penuh
+                placeholder: 'Choose...', // Placeholder default
+            });
+        });
+        $(document).ready(function() {
+            $('#projekIm').select2({
+                theme: 'bootstrap-5', // Menggunakan tema Bootstrap
+                width: '100%', // Menjamin lebar penuh
+                placeholder: 'Choose...', // Placeholder default
+            });
         });
     </script>
     @include('sweetalert::alert')

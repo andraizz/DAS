@@ -105,7 +105,7 @@
                 <div class="container position-relative">
                     <div class="row gy-4 mt-5">
 
-                        <div class="col-xl-3 col-md-6">
+                        <div class="col-lg-3 col-sm-6">
                             <a class="card1" href="{{ route('incoming-mail.index') }}">
                                 <div class="icon">
                                     <svg width="55" height="55" viewBox="0 0 55 55" fill="none"
@@ -115,14 +115,14 @@
                                             fill="currentColor" />
                                     </svg>
                                 </div>
-                                <h4 class="title">Incoming Mail</h4>
+                                <h4 class="title">Incoming Document</h4>
                                 <div class="go-corner" href="#">
                                     <div class="go-arrow">→</div>
                                 </div>
                             </a>
                         </div><!--End Icon Box -->
 
-                        <div class="col-xl-3 col-md-6">
+                        <div class="col-lg-3 col-sm-6">
                             <a class="card1" href="{{ route('outgoing-mail.index') }}">
                                 <div class="icon">
                                     <svg width="55" height="55" viewBox="0 0 55 55" fill="none"
@@ -132,14 +132,14 @@
                                             fill="currentColor" />
                                     </svg>
                                 </div>
-                                <h4 class="title">Outgoing Mail</h4>
+                                <h4 class="title">Outgoing Document</h4>
                                 <div class="go-corner" href="#">
                                     <div class="go-arrow">→</div>
                                 </div>
                             </a>
                         </div><!--End Icon Box -->
 
-                        <div class="col-xl-3 col-md-6">
+                        <div class="col-lg-3 col-sm-6">
                             <a class="card1" href="{{ route('internal-memo.index') }}">
                                 <div class="icon">
                                     <svg width="55" height="55" viewBox="0 0 55 55" fill="none"
@@ -156,7 +156,7 @@
                             </a>
                         </div><!--End Icon Box -->
 
-                        <div class="col-xl-3 col-md-6">
+                        <div class="col-lg-3 col-sm-6">
                             <a class="card1" href="{{ route('surat-perjanjian.index') }}">
                                 <div class="icon">
                                     <svg width="55" height="55" viewBox="0 0 55 55" fill="none"
