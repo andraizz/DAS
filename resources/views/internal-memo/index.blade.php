@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-3">
                         <div class="text-center mb-n5">
-                            <img src="dist/images/breadcrumb/ChatBc.png" alt="" class="img-fluid mb-n4">
+                            <img src="dist/images/breadcrumb/emailSv.png" alt="" class="img-fluid mb-n4">
                         </div>
                     </div>
                 </div>
@@ -59,20 +59,21 @@
                                         @forelse ($mails as $mail)
                                             <tr>
                                                 <td>
-                                                    @if ($mail->remaining_days > 0 && !$mail->is_closed)
-                                                        <!-- Tampilkan link jika belum expired dan belum closed -->
-                                                        <a
-                                                            href="{{ route('internal-memo.detail', ['ticket_number' => $mail->ticket_number]) }}">
-                                                            {{ $mail->ticket_number }}
-                                                        </a>
-                                                    @else
-                                                        <!-- Tampilkan teks biasa jika expired atau closed -->
-                                                        <span class="text-muted">{{ $mail->ticket_number }}</span>
-                                                    @endif
+                                                    <a
+                                                        href="{{ route('internal-memo.detail', ['ticket_number' => $mail->ticket_number]) }}">
+                                                        {{ $mail->ticket_number }}
+                                                    </a>
                                                 </td>
                                                 <td>{{ $mail->divisi }}</td>
                                                 <td>{{ $mail->perihal }}</td>
-                                                <td>{{ $mail->document_number }}</td>
+                                                <td>
+                                                    <span id="copyText-{{ $mail->document_number }}"
+                                                        class="copy-text">{{ $mail->document_number }}</span>
+                                                    <button class="btn btn-sm btn-outline-secondary copy-btn"
+                                                        data-clipboard-text="{{ $mail->document_number }}">
+                                                        <i class="fa fa-copy"></i>
+                                                    </button>
+                                                </td>
                                                 <td>{{ $mail->created_at->format('d-m-Y H:i') }}</td>
                                                 <td>
                                                     @if ($mail->is_closed)

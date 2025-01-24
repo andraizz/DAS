@@ -6,7 +6,7 @@
             <div class="card-body px-4 py-3">
                 <div class="row align-items-center">
                     <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Incoming Mail</h4>
+                        <h4 class="fw-semibold mb-8">Incoming Document</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a class="text-muted text-decoration-none"
@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-3">
                         <div class="text-center mb-n5">
-                            <img src="dist/images/breadcrumb/ChatBc.png" alt="" class="img-fluid mb-n4">
+                            <img src="dist/images/breadcrumb/emailSv.png" alt="" class="img-fluid mb-n4">
                         </div>
                     </div>
                 </div>
@@ -30,8 +30,6 @@
                 <div class="col-sm-12">
                     <div>
                         <div class="card">
-                            <h1 class="mx-4">Form</h1>
-                            <hr class="mt-0" />
                             <div class="card-body">
                                 <form class="needs-validation" method="POST" action="{{ route('incoming-mail.store') }}"
                                     enctype="multipart/form-data" novalidate>
@@ -91,7 +89,6 @@
                                                 required>
                                                 <option value="" selected>Choose...</option>
                                                 <option value="MS">MS </option>
-                                                <option value="LEG">LEG</option>
                                                 <option value="CORSEC">CORSEC</option>
                                                 <option value="ENG">ENG</option>
                                                 <option value="SALES">SALES</option>
@@ -101,6 +98,21 @@
                                                 <option value="HRD">HRD</option>
                                                 <option value="SP">SP</option>
                                                 <option value="IA">IA</option>
+                                                @if (Auth::user()->nik == 'KT-25010503')
+                                                    <option value="BETARI">BETARI</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-22071206')
+                                                    <option value="ACC">ACC</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-23111401')
+                                                    <option value="SITAC">SITAC</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-19100823')
+                                                    <option value="LEG">LEG</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-23051308' || Auth::user()->nik == 'KT-22081208')
+                                                    <option value="CME">CME</option>
+                                                @endif
                                             </select>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>

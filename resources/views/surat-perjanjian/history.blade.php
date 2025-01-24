@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-3">
                         <div class="text-center mb-n5">
-                            <img src="dist/images/breadcrumb/ChatBc.png" alt="" class="img-fluid mb-n4">
+                            <img src="dist/images/breadcrumb/emailSv.png" alt="" class="img-fluid mb-n4">
                         </div>
                     </div>
                 </div>

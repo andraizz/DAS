@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-3">
                         <div class="text-center mb-n5">
-                            <img src="dist/images/breadcrumb/ChatBc.png" alt="" class="img-fluid mb-n4">
+                            <img src="dist/images/breadcrumb/emailSv.png" alt="" class="img-fluid mb-n4">
                         </div>
                     </div>
                 </div>
@@ -64,18 +64,19 @@
                                     <div class="mb-3 row">
                                         <label for="inlineFormCustomSelect" class="col-md-2 col-form-label">Tujuan</label>
                                         <div class="col-md-10">
-                                            <select class="form-select col-12" id="tujuan" name="tujuan"
-                                                required onchange="toggleOtherInput('tujuan')">
+                                            <select class="form-select col-12" id="tujuanSp" name="tujuan" required
+                                                onchange="toggleOtherInput('tujuan')">
                                                 <option value="" selected>Choose...</option>
                                                 @foreach ($tujuanList as $tujuan)
-                                                    <option value="{{ $tujuan->tujuan }}" data-kode="{{ $tujuan->kode_tujuan }}">
+                                                    <option value="{{ $tujuan->tujuan }}"
+                                                        data-kode="{{ $tujuan->kode_tujuan }}">
                                                         {{ $tujuan->tujuan }}
                                                     </option>
                                                 @endforeach
-                                                <option value="others">Others</option>
                                             </select>
                                             <div id="tujuan_other_div" style="display: none;">
-                                                <input type="text" class="form-control mt-2" id="tujuan_other" name="tujuan_other" placeholder="Input tujuan lainnya">
+                                                <input type="text" class="form-control mt-2" id="tujuan_other"
+                                                    name="tujuan_other" placeholder="Input tujuan lainnya">
                                             </div>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>
@@ -90,7 +91,6 @@
                                                 required>
                                                 <option value="" selected>Choose...</option>
                                                 <option value="MS">MS </option>
-                                                <option value="LEG">LEG</option>
                                                 <option value="CORSEC">CORSEC</option>
                                                 <option value="ENG">ENG</option>
                                                 <option value="SALES">SALES</option>
@@ -100,6 +100,21 @@
                                                 <option value="HRD">HRD</option>
                                                 <option value="SP">SP</option>
                                                 <option value="IA">IA</option>
+                                                @if (Auth::user()->nik == 'KT-25010503')
+                                                    <option value="BETARI">BETARI</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-22071206')
+                                                    <option value="ACC">ACC</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-23111401')
+                                                    <option value="SITAC">SITAC</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-19100823')
+                                                    <option value="LEG">LEG</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-23051308' || Auth::user()->nik == 'KT-22081208')
+                                                    <option value="CME">CME</option>
+                                                @endif
                                             </select>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>
@@ -107,22 +122,19 @@
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="inlineFormCustomSelect" class="col-md-2 col-form-label">Perihal</label>
+                                        <label for="inlineFormCustomSelect"
+                                            class="col-md-2 col-form-label">Perihal</label>
                                         <div class="col-md-10">
-                                            <select class="form-select col-12" id="perihal" name="perihal"
-                                                required onchange="toggleOtherInput('perihal')">
+                                            <select class="select2 form-control col-12" id="perihalSp" name="perihal"
+                                                required>
                                                 <option value="" selected>Choose...</option>
-                                                <option value="AMD">AMD </option>
-                                                <option value="MOU">MOU</option>
-                                                <option value="NDA">NDA</option>
-                                                <option value="LOI">LOI</option>
-                                                <option value="LOA">LOA</option>
-                                                <option value="SPK">SPK</option>
-                                                <option value="others">Others</option>
+                                                @foreach ($perihalList as $perihal)
+                                                    <option value="{{ $perihal->perihal }}"
+                                                        data-kode="{{ $perihal->kode_perihal }}">
+                                                        {{ $perihal->perihal }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-                                            <div id="perihal_other_div" style="display: none;">
-                                                <input type="text" class="form-control mt-2" id="perihal_other" name="perihal_other" placeholder="Input perihal lainnya">
-                                            </div>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>
                                         </div>

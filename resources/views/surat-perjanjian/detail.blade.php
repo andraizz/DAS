@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-3">
                         <div class="text-center mb-n5">
-                            <img src="dist/images/breadcrumb/ChatBc.png" alt="" class="img-fluid mb-n4">
+                            <img src="dist/images/breadcrumb/emailSv.png" alt="" class="img-fluid mb-n4">
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         <div class="form-body">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-3">
                                         <h5 class="card-title mb-0">{{ $ticket->ticket_number }}</h5>
                                     </div>
                                     <div class="col-lg-2">
@@ -54,91 +54,144 @@
                                 <div class="row">
                                     <div class="col-lg-12 mb-2">
                                         <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Judul</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->judul }}</h6>
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Judul</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->judul }}</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
                                         <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Perusahaan Pengirim</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->perusahaan }}</h6>
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Perusahaan Pengirim</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->perusahaan }}</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
                                         <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Tujuan</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->tujuan }}</h6>
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Tujuan</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->tujuan }}</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
                                         <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Divisi / Direktorat</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->divisi }}</h6>
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Divisi / Direktorat</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->divisi }}</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
                                         <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Perihal</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->perihal }}</h6>
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Perihal</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->perihal }}</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
                                         <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Tanggal Surat</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->tanggal_surat }}</h6>
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Tanggal Surat</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->tanggal_surat }}</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
                                         <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Confidential Criteria</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->confidential }}</h6>
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Confidential Criteria</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->confidential }}</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
                                         <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Nomor Dokumen</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->document_number }}</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mb-2">
-                                        <div class="form-group row">
-                                            <h6 class="control-label col-md-2">Tanggal Dibuat</h6>
-                                            <div class="col-10">
-                                                <h6 class="form-control-static">: {{ $ticket->created_at }}</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mb-2">
-                                        <div class="form-group row">
-                                            <h6 class="control-label col-md-2">File</h6>
-                                            <div class="col-10">
-                                                @if ($ticket->file_path && Storage::exists('public/' . $ticket->file_path))
-                                                    <h6 class="form-control-static">
-                                                        : <a href="{{ asset('storage/' . $ticket->file_path) }}"
-                                                            target="_blank">Lihat File</a>
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Nomor Dokumen</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->document_number }}
                                                     </h6>
-                                                @else
-                                                    <h6 class="form-control-static">: -</h6>
-                                                @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-group row">
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Tanggal Dibuat</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    <h6 class="form-control-static mb-0">{{ $ticket->created_at }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-group row">
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">
+                                                Tanggal Tiket Ditutup</h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    @if ($ticket->status === 'Closed')
+                                                        <h6 class="form-control-static mb-0">{{ $ticket->updated_at }}</h6>
+                                                    @else
+                                                        <h6 class="form-control-static mb-0">-</h6>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-group row">
+                                            <h6 class="control-label col-md-3 mb-0 d-flex align-items-center fw-bolder">File
+                                            </h6>
+                                            <div class="col-9">
+                                                <div class="bg-grey p-2">
+                                                    @if ($ticket->file_path && Storage::exists('public/' . $ticket->file_path))
+                                                        <h6 class="form-control-static mb-0">
+                                                            <a href="{{ 'https://das.triasmitra.com/storage/app/public/' . $ticket->file_path }}"
+                                                                target="_blank">Lihat File</a>
+                                                        </h6>
+                                                    @else
+                                                        <h6 class="form-control-static mb-0">-</h6>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if ($daysLate > 0)
+                                        <div class="col-lg-12 mb-2">
+                                            <p class="text-danger">
+                                                Anda terlambat {{ $daysLate }} hari untuk upload file
+                                            </p>
+                                        </div>
+                                    @endif
                                 </div>
                                 <hr />
                                 <div class="row">
@@ -152,6 +205,8 @@
                                                 <div class="form-group mb-3">
                                                     <label for="file" class="form-label">File
                                                         ({{ $ticket->confidential == 'No' ? 'Required' : 'Optional' }})</label>
+                                                    <small id="textHelp" class="form-text text-danger">Max upload
+                                                        2MB</small>
                                                     <input type="file" name="file" class="form-control"
                                                         {{ $ticket->confidential == 'No' ? 'required' : '' }}>
                                                     <small id="textHelp" class="form-text text-muted">PDF only</small>

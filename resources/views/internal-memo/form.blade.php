@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-3">
                         <div class="text-center mb-n5">
-                            <img src="dist/images/breadcrumb/ChatBc.png" alt="" class="img-fluid mb-n4">
+                            <img src="dist/images/breadcrumb/emailSv.png" alt="" class="img-fluid mb-n4">
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,6 @@
                                                 required>
                                                 <option value="" selected>Choose...</option>
                                                 <option value="MS">MS </option>
-                                                <option value="LEG">LEG</option>
                                                 <option value="CORSEC">CORSEC</option>
                                                 <option value="ENG">ENG</option>
                                                 <option value="SALES">SALES</option>
@@ -68,6 +67,21 @@
                                                 <option value="HRD">HRD</option>
                                                 <option value="SP">SP</option>
                                                 <option value="IA">IA</option>
+                                                @if (Auth::user()->nik == 'KT-25010503')
+                                                    <option value="BETARI">BETARI</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-22071206')
+                                                    <option value="ACC">ACC</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-23111401')
+                                                    <option value="SITAC">SITAC</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-19100823')
+                                                    <option value="LEG">LEG</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-23051308' || Auth::user()->nik == 'KT-22081208')
+                                                    <option value="CME">CME</option>
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
@@ -75,13 +89,15 @@
                                     <div class="mb-3 row">
                                         <label for="inlineFormCustomSelect" class="col-md-2 col-form-label">Project</label>
                                         <div class="col-md-10">
-                                            <select class="form-select col-12" id="inlineFormCustomSelect" name="project"
+                                            <select class="select form-select col-12" id="projekIm" name="project"
                                                 required>
                                                 <option value="" selected>Choose...</option>
-                                                <option value="KOM">KOM</option>
-                                                <option value="DIR">DIR</option>
-                                                <option value="GM">GM</option>
-                                                <option value="MGR">MGR</option>
+                                                @foreach ($projekList as $projek)
+                                                    <option value="{{ $projek->kode_projek }}"
+                                                        data-kode="{{ $projek->kode_projek }}">
+                                                        {{ $projek->kode_projek }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>

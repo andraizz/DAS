@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\MasterAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MasterAdminController;
 use App\Http\Controllers\IncomingMailController;
 use App\Http\Controllers\InternalMemoController;
 use App\Http\Controllers\OutgoingMailController;
@@ -29,6 +31,30 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
+
+    Route::prefix('admin/outgoing-mail')->name('admin.outgoing-mail.')->group(function () {
+        Route::get('/tujuan', [MasterAdminController::class, 'skTujuan'])->name('tujuan');
+        Route::get('/perihal', [MasterAdminController::class, 'skPerihal'])->name('perihal');
+        Route::get('/form', [MasterAdminController::class, 'skForm'])->name('form');
+        Route::get('/form2', [MasterAdminController::class, 'skForm2'])->name('form2');
+        Route::post('/index', [MasterAdminController::class, 'store'])->name('store');
+        Route::post('/index2', [MasterAdminController::class, 'store2'])->name('store2');
+    });
+
+    Route::prefix('admin/surat-perjanjian')->name('admin.surat-perjanjian.')->group(function () {
+        Route::get('/tujuan', [MasterAdminController::class, 'spTujuan'])->name('tujuan');
+        Route::get('/perihal', [MasterAdminController::class, 'spPerihal'])->name('perihal');
+        Route::get('/form', [MasterAdminController::class, 'spForm'])->name('form');
+        Route::get('/form2', [MasterAdminController::class, 'spForm2'])->name('form2');
+        Route::post('/index', [MasterAdminController::class, 'spStore'])->name('store');
+        Route::post('/index2', [MasterAdminController::class, 'spStore2'])->name('store2');
+    });
+
+    Route::prefix('admin/internal-memo')->name('admin.internal-memo.')->group(function () {
+        Route::get('/projek', [MasterAdminController::class, 'imProjek'])->name('projek');
+        Route::get('/form', [MasterAdminController::class, 'imForm'])->name('form');
+        Route::post('/index', [MasterAdminController::class, 'imStore'])->name('store');
+    });
 
     // Incoming Mail Routes
     Route::prefix('incoming-mail')->name('incoming-mail.')->group(function () {

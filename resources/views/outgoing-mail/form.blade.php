@@ -6,7 +6,7 @@
             <div class="card-body px-4 py-3">
                 <div class="row align-items-center">
                     <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Outgoing Mail</h4>
+                        <h4 class="fw-semibold mb-8">Outgoing Document</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a class="text-muted text-decoration-none"
@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-3">
                         <div class="text-center mb-n5">
-                            <img src="dist/images/breadcrumb/ChatBc.png" alt="" class="img-fluid mb-n4">
+                            <img src="dist/images/breadcrumb/emailSv.png" alt="" class="img-fluid mb-n4">
                         </div>
                     </div>
                 </div>
@@ -64,19 +64,16 @@
                                     <div class="mb-3 row">
                                         <label for="inlineFormCustomSelect" class="col-md-2 col-form-label">Tujuan</label>
                                         <div class="col-md-10">
-                                            <select class="form-select col-12" id="tujuan" name="tujuan"
-                                                required onchange="toggleOtherInput('tujuan')">
+                                            <select class="select2 form-control col-12" style="width: 100%; height: 36px;"
+                                                id="tujuanSk" name="tujuan" required>
                                                 <option value="" selected>Choose...</option>
                                                 @foreach ($tujuanList as $tujuan)
-                                                    <option value="{{ $tujuan->tujuan }}" data-kode="{{ $tujuan->kode_tujuan }}">
+                                                    <option value="{{ $tujuan->tujuan }}"
+                                                        data-kode="{{ $tujuan->kode_tujuan }}">
                                                         {{ $tujuan->tujuan }}
                                                     </option>
                                                 @endforeach
-                                                <option value="others">Others</option>
                                             </select>
-                                            <div id="tujuan_other_div" style="display: none;">
-                                                <input type="text" class="form-control mt-2" id="tujuan_other" name="tujuan_other" placeholder="Input tujuan lainnya">
-                                            </div>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>
                                         </div>
@@ -107,7 +104,6 @@
                                                 required>
                                                 <option value="" selected>Choose...</option>
                                                 <option value="MS">MS </option>
-                                                <option value="LEG">LEG</option>
                                                 <option value="CORSEC">CORSEC</option>
                                                 <option value="ENG">ENG</option>
                                                 <option value="SALES">SALES</option>
@@ -117,6 +113,21 @@
                                                 <option value="HRD">HRD</option>
                                                 <option value="SP">SP</option>
                                                 <option value="IA">IA</option>
+                                                @if (Auth::user()->nik == 'KT-25010503')
+                                                    <option value="BETARI">BETARI</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-22071206')
+                                                    <option value="ACC">ACC</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-23111401')
+                                                    <option value="SITAC">SITAC</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-19100823')
+                                                    <option value="LEG">LEG</option>
+                                                @endif
+                                                @if (Auth::user()->nik == 'KT-23051308' || Auth::user()->nik == 'KT-22081208')
+                                                    <option value="CME">CME</option>
+                                                @endif
                                             </select>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>
@@ -127,23 +138,37 @@
                                         <label for="inlineFormCustomSelect"
                                             class="col-md-2 col-form-label">Perihal</label>
                                         <div class="col-md-10">
-                                            <select class="form-select col-12" id="perihal" name="perihal"
-                                                required onchange="toggleOtherInput('perihal')">
+                                            <select class="select2 form-control col-12" id="perihalSk" name="perihal"
+                                                required>
                                                 <option value="" selected>Choose...</option>
                                                 @foreach ($perihalList as $perihal)
-                                                    <option value="{{ $perihal->perihal }}" data-kode="{{ $perihal->kode_perihal }}">
+                                                    <option value="{{ $perihal->perihal }}"
+                                                        data-kode="{{ $perihal->kode_perihal }}">
                                                         {{ $perihal->perihal }}
                                                     </option>
                                                 @endforeach
-                                                <option value="others">Others</option>
                                             </select>
                                             <div id="perihal_other_div" style="display: none;">
-                                                <input type="text" class="form-control mt-2" id="perihal_other" name="perihal_other" placeholder="Input perihal lainnya">
+                                                <input type="text" class="form-control mt-2" id="perihal_other"
+                                                    name="perihal_other" placeholder="Input perihal lainnya">
                                             </div>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">Please provide a valid input.</div>
                                         </div>
                                     </div>
+
+                                    @if (Auth::user()->divisi == 'Finance & Accounting')
+                                        <div class="mb-3 row">
+                                            <label for="validationCustom01" class="col-md-2 col-form-label">No.
+                                                Invoice</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" name="invoice"
+                                                    id="validationCustom01" placeholder="Nomor Invoice" required />
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please provide a valid input.</div>
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <div class="mb-3 row">
                                         <label for="example-date-input" class="col-md-2 col-form-label">Tanggal
@@ -206,13 +231,13 @@
 @endsection
 
 <script>
-    function toggleOtherInput(type) {
-        const select = document.getElementById(type);
-        const otherDiv = document.getElementById(`${type}_other_div`);
-        if (select.value === "others") {
-            otherDiv.style.display = "block";
-        } else {
-            otherDiv.style.display = "none";
-        }
-    }
+    // function toggleOtherInput(type) {
+    //     const select = document.getElementById(type);
+    //     const otherDiv = document.getElementById(`${type}_other_div`);
+    //     if (select.value === "others") {
+    //         otherDiv.style.display = "block";
+    //     } else {
+    //         otherDiv.style.display = "none";
+    //     }
+    // }
 </script>
