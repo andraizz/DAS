@@ -18,6 +18,7 @@ class OutgoingMail extends Model
         'penandatangan',
         'divisi',
         'perihal',
+        'invoice',
         'tanggal_dikirim',
         'tanggal_surat',
         'end_date',
